@@ -61,27 +61,29 @@ public class StrizhViewModel extends AndroidViewModel {
 
     };
 
-
-//    String name = notesBank.get(CurIndex).getName();
-//    String description = notesBank.get(CurIndex).getDescription();
-
-
-//    public void addNote(){
-//        notesBank.add(new TaskModel(CurIndex, name, description));
-//    }
-    public void moveToNext(){
-
-        int idTemp = CurIndex;
-        if(idTemp++< notesBank.size()-1){        CurIndex++;
-            loadDataInt();}
-
+    public void showLast()
+    {
+        CurIndex = notesBank.size()-1;
+        loadDataInt();
     }
-
-    public void moveToPrevious(){
+    public void moveToNext()
+    {
         int idTemp = CurIndex;
-
-        if(idTemp-- > 0){CurIndex--;
+        if(idTemp++< notesBank.size()-1)
+        {
+            CurIndex++;
             loadDataInt();}
+
+        }
+
+    public void moveToPrevious()
+    {
+        int idTemp = CurIndex;
+        if(idTemp-- > 0)
+        {
+            CurIndex--;
+            loadDataInt();
+        }
 
     }
 }

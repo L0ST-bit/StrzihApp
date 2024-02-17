@@ -28,16 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private int idNote;
 
     private ArrayList<TaskModel> notes = new ArrayList<TaskModel>();
-    private void Console(){
-        int t = 0;
-        t++;
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Console();
 
 
         StrizhViewModel strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
@@ -83,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 idNote = notes.size()-1;
                 note_name.setText(notes.get(idNote).getName());
                 note_description.setText(notes.get(idNote).getDescription());
+                strizhViewModel.showLast();
 
             }
         });
