@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button add_button, edit_button, show_last_button;
     private ImageButton next, previous;
     private int idNote;
+    private StrizhViewModel strizhViewModel;
 
     private ArrayList<TaskModel> notes = new ArrayList<TaskModel>();
 
@@ -37,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("Lifecycle", "onCreate invoked");
 
 
 
-        StrizhViewModel strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
+        strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
         strizhViewModel.getData().observe(this, data -> {
              notes = data;
         });
@@ -59,22 +61,12 @@ public class MainActivity extends AppCompatActivity {
         previous = (ImageButton) findViewById(R.id.previous);
         next = (ImageButton) findViewById(R.id.next);
 
-        Log.d("Lifecycle", "onCreate invoked");
-
 
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //strizhViewModel.addNote();
-                notes.add(new TaskModel(notes.size(), note_name.getText().toString(), note_description.getText().toString()));
-
-                note_name.setText("");
-                note_description.setText("");
-
-                //idNote = notes.size()-1;
-
+                Intent i = new Intent(MainActivity.this, AddNoteActivity.class);
+                startActivityForResult(i,2);
             }
         });
         show_last_button.setOnClickListener(new View.OnClickListener() {
@@ -137,20 +129,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            // Извлекаем результат из Intent
+
+            assert data != null;
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
             int id = data.getIntExtra(TAG_ID, 0);
@@ -159,26 +145,35 @@ public class MainActivity extends AppCompatActivity {
             notes.get(id).setDescription(description);
             note_name.setText(name);
             note_description.setText(description);
+        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+
+            assert data != null;
+            String name = data.getStringExtra(TAG_NAME);
+            String description = data.getStringExtra(TAG_DESC);
+
+            notes.add(new TaskModel(notes.size(), name, description));
+            strizhViewModel.showLast();
+            note_name.setText(notes.get(idNote).getName());
+            note_description.setText(notes.get(idNote).getDescription());
+
         }
     }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.d("Lifecycle", "onStart invoked");
 
-
-//        try {
-//            Intent intent = getIntent();
-//            int id = intent.getIntExtra(TAG_ID, 0);
-//            String name = intent.getStringExtra(TAG_NAME);
-//            String description = intent.getStringExtra(TAG_DESC);
-//            notes.get(id).setName(name);
-//            notes.get(id).setDescription(description);
-//            note_name.setText(name);
-//            note_description.setText(description);
-//        }
-//        catch (Exception e){}
 
     }
 
@@ -187,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.d("Lifecycle", "onResume invoked");
 
+        note_name.setText(notes.get(idNote).getName());
+        note_description.setText(notes.get(idNote).getDescription());
 
     }
 
