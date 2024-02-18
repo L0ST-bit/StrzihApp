@@ -1,8 +1,10 @@
 package com.example.strzihapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -89,15 +91,14 @@ public class MainActivity extends AppCompatActivity {
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                notes.get(idNote).setName(note_name.getText().toString());
-//                notes.get(idNote).setDescription(note_description.getText().toString());
+
 
                 Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
                 i.putExtra(TAG_NAME,notes.get(idNote).getName());
                 i.putExtra(TAG_DESC,notes.get(idNote).getDescription());
                 i.putExtra(TAG_ID,idNote);
 
-                startActivity(i);
+                startActivityForResult(i,1);
 
 
 
@@ -144,16 +145,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            // Извлекаем результат из Intent
+            String name = data.getStringExtra(TAG_NAME);
+            String description = data.getStringExtra(TAG_DESC);
+            int id = data.getIntExtra(TAG_ID, 0);
+
+            notes.get(id).setName(name);
+            notes.get(id).setDescription(description);
+            note_name.setText(name);
+            note_description.setText(description);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         Log.d("Lifecycle", "onStart invoked");
-        Intent intent = getIntent();
-        int idNote = intent.getIntExtra(TAG_ID, 0);
-        String name = intent.getStringExtra(TAG_NAME);
-        String description = intent.getStringExtra(TAG_DESC);
-        notes.
-//        note_name.setText(name);
-//        note_description.setText(description);
+
+
+//        try {
+//            Intent intent = getIntent();
+//            int id = intent.getIntExtra(TAG_ID, 0);
+//            String name = intent.getStringExtra(TAG_NAME);
+//            String description = intent.getStringExtra(TAG_DESC);
+//            notes.get(id).setName(name);
+//            notes.get(id).setDescription(description);
+//            note_name.setText(name);
+//            note_description.setText(description);
+//        }
+//        catch (Exception e){}
+
     }
 
     @Override

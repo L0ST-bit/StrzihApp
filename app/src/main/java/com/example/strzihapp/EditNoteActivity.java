@@ -2,6 +2,7 @@ package com.example.strzihapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,19 +46,16 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(EditNoteActivity.this, MainActivity.class);
-                i.putExtra(TAG_NAME,note_name.getText());
-                i.putExtra(TAG_DESC,note_description.getText());
-                i.putExtra(TAG_ID,idNote);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(TAG_NAME,note_name.getText().toString());
+                resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
+                resultIntent.putExtra(TAG_ID,idNote);
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
             }
         });
     }
 
 
-//    public static Intent newIntent(Context packageContext, String name){
-//        Intent i = new Intent(packageContext, EditNoteActivity.class);
-//        i.putExtra(TAG_NAME, name);
-//        i.putExtra(TAG_DESC, des);
-//        return i;
-//    }
+
 }
