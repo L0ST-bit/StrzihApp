@@ -28,12 +28,12 @@
         app:srcCompat="@android:drawable/ic_media_previous" />
 
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="196dp"
         android:layout_marginTop="271dp"
-        android:text="@string/save_button"
+        android:text="@string/edit_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

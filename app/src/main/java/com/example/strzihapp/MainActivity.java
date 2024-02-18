@@ -3,14 +3,13 @@ package com.example.strzihapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = "StrizhViewModel";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_DESC = "description";
+    private static final String TAG_ID = "id_note";
     private EditText note_name, note_description;
-    private Button add_button, save_button, show_last_button;
+    private Button add_button, edit_button, show_last_button;
     private ImageButton next, previous;
     private int idNote;
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         note_description = (EditText)
                 findViewById(R.id.note_description_edit);
         add_button = (Button) findViewById(R.id.add_button);
-        save_button = (Button) findViewById(R.id.save_button);
+        edit_button = (Button) findViewById(R.id.edit_button);
         show_last_button = (Button) findViewById(R.id.show_last_button);
         previous = (ImageButton) findViewById(R.id.previous);
         next = (ImageButton) findViewById(R.id.next);
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 note_name.setText("");
                 note_description.setText("");
 
-                idNote = notes.size()-1;
+                //idNote = notes.size()-1;
 
             }
         });
@@ -84,11 +86,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        save_button.setOnClickListener(new View.OnClickListener() {
+        edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notes.get(idNote).setName(note_name.getText().toString());
-                notes.get(idNote).setDescription(note_description.getText().toString());
+//                notes.get(idNote).setName(note_name.getText().toString());
+//                notes.get(idNote).setDescription(note_description.getText().toString());
+
+                Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
+                i.putExtra(TAG_NAME,notes.get(idNote).getName());
+                i.putExtra(TAG_DESC,notes.get(idNote).getDescription());
+                i.putExtra(TAG_ID,idNote);
+
+                startActivity(i);
+
+
 
             }
         });
@@ -136,12 +147,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d("Lifecycle", "onStart invoked");
+        Intent intent = getIntent();
+        int idNote = intent.getIntExtra(TAG_ID, 0);
+        String name = intent.getStringExtra(TAG_NAME);
+        String description = intent.getStringExtra(TAG_DESC);
+        notes.
+//        note_name.setText(name);
+//        note_description.setText(description);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("Lifecycle", "onResume invoked");
+
+
     }
 
     @Override
