@@ -86,9 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-                i.putExtra(TAG_NAME,notes.get(idNote).getName());
-                i.putExtra(TAG_DESC,notes.get(idNote).getDescription());
-                i.putExtra(TAG_ID,idNote);
+                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote);
+
 
                 startActivityForResult(i,1);
 
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
-            assert data != null;
+
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
             int id = data.getIntExtra(TAG_ID, 0);
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             note_description.setText(description);
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
-            assert data != null;
+
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
 
