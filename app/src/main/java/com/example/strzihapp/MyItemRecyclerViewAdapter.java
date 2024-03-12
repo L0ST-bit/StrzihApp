@@ -3,6 +3,7 @@ package com.example.strzihapp;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 import static androidx.core.content.ContextCompat.startActivity;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -65,7 +66,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.itemView.setOnClickListener(v -> {
 
-            mainActivity.getEdit();
+            //mainActivity.getEdit();
+            mainActivity.startFragment(selectedNote.getId());
+
 //
 //            Intent intent = new Intent(context, EditNoteActivity.class);
 //            intent.putExtra(TAG_NAME, selectedNote.getName());
@@ -73,6 +76,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 //            intent.putExtra(TAG_ID, selectedNote.getId());
 //            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
 //            context.startActivity(intent);
+
+
         });
     }
 

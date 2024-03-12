@@ -2,6 +2,7 @@ package com.example.strzihapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -229,7 +230,10 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
 
+
     }
+
+
 
     @Override
     protected void onPause() {
@@ -253,12 +257,29 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<TaskModel> getNotes() {
         return notes;
     }
+
+    public void startFragment(int id){
+        Bundle args = new Bundle();
+        args.putString(TAG_NAME, notes.get(id).getName());
+        args.putString(TAG_DESC, notes.get(id).getDescription());
+        args.putBoolean(TAG_CHECK, notes.get(id).isCheck());
+
+        BlankFragment_frame_two blankFragment1 = new BlankFragment_frame_two();
+        blankFragment1.setArguments(args);
+
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        ft2.replace(R.id.frame_two, blankFragment1);
+        ft2.commit();
+    }
+
 //лаб7 меню +
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
