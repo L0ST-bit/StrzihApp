@@ -10,53 +10,40 @@ import android.widget.TextView;
 import com.example.strzihapp.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.strzihapp.databinding.FragmentItemNoteBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
+    private ArrayList<TaskModel> notes;
 
-    public MyItemRecyclerViewAdapter(List<PlaceholderItem> items) {
-        mValues = items;
+    public NotesAdapter(ArrayList<TaskModel> notes) {
+        this.notes = notes;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewNoteTitle;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            textViewNoteTitle = itemView.findViewById(R.id.textViewNoteTitle);
+        }
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        return new ViewHolder(FragmentItemNoteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
+    public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(NotesAdapter.ViewHolder holder, int position) {
+        TaskModel note = notes.get(position);
+        holder.textViewNoteTitle.setText(note.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public PlaceholderItem mItem;
-
-        public ViewHolder(FragmentItemNoteBinding binding) {
-            super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
+        return notes.size();
     }
 }
