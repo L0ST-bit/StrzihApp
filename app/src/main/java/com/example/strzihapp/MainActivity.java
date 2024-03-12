@@ -2,15 +2,19 @@ package com.example.strzihapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private StrizhViewModel strizhViewModel;
 
     private ArrayList<TaskModel> notes = new ArrayList<TaskModel>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +70,7 @@ public class MainActivity extends AppCompatActivity {
         previous = (ImageButton) findViewById(R.id.previous);
         next = (ImageButton) findViewById(R.id.next);
 
-        String name = getIntent().getStringExtra("name");
-        String description = getIntent().getStringExtra("desc");
 
-        note_description.setText(description.toString());
-        note_name.setText(name.toString());
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote);
+                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
 
 
                 startActivityForResult(i,1);
@@ -152,16 +153,17 @@ public class MainActivity extends AppCompatActivity {
 
             notes.get(id).setName(name);
             notes.get(id).setDescription(description);
+            notes.get(id).setCheck(check);
             note_name.setText(name);
             note_description.setText(description);
-            //add
+
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
 
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
 
-            notes.add(new TaskModel(notes.size(), name, description));
+            notes.add(new TaskModel(notes.size(), name, description, "", false));
             strizhViewModel.showLast();
             note_name.setText(notes.get(idNote).getName());
             note_description.setText(notes.get(idNote).getDescription());
@@ -195,6 +197,13 @@ public class MainActivity extends AppCompatActivity {
         note_name.setText(notes.get(idNote).getName());
         note_description.setText(notes.get(idNote).getDescription());
 
+        ItemFragment_note blankFragment = new ItemFragment_note();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_one, blankFragment);
+        ft.commit();
+
+
     }
 
     @Override
@@ -215,6 +224,25 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Lifecycle", "onDestroy invoked");
     }
 
+
+    public ArrayList<TaskModel> getNotes() {
+        return notes;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add) {
+            Intent i = new Intent(MainActivity.this, AddNoteActivity.class);
+            startActivityForResult(i,2);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

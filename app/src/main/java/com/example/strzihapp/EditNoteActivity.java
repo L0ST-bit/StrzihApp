@@ -48,6 +48,7 @@ public class EditNoteActivity extends AppCompatActivity {
         boolean check = intent.getBooleanExtra(TAG_CHECK, false);
         note_name.setText(name);
         note_description.setText(description);
+        checkBox_.setChecked(check);
 
 
         checkBox_.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -65,7 +66,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 resultIntent.putExtra(TAG_NAME,note_name.getText().toString());
                 resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
                 resultIntent.putExtra(TAG_ID,idNote);
-                resultIntent.putExtra(TAG_CHECK,check);
+                resultIntent.putExtra(TAG_CHECK,checkBox_.isChecked());
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             }

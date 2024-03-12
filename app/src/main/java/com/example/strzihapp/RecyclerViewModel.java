@@ -8,8 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
-public class StrizhViewModel extends AndroidViewModel {
-    private static final String TAG = "StrizhViewModel";
+public class RecyclerViewModel extends AndroidViewModel {
+
+    public RecyclerViewModel(@NonNull Application application, int curIndex) {
+        super(application);
+    }
+
+    private static final String TAG = "StrizhViewModelRecycler";
     int CurIndex;
 
     private MutableLiveData<ArrayList<TaskModel>> data;
@@ -39,9 +44,7 @@ public class StrizhViewModel extends AndroidViewModel {
 
     }
 
-    public StrizhViewModel(@NonNull Application application) {
-        super(application);
-    }
+
 
 
     @Override
@@ -53,36 +56,13 @@ public class StrizhViewModel extends AndroidViewModel {
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", "", false));
-            add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2", "", false));
-            add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3", "", false));
+            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", TAG, false));
+            add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2", TAG, false));
+            add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3", TAG, false));
         }
 
     };
 
-    public void showLast()
-    {
-        CurIndex = notesBank.size()-1;
-        loadDataInt();
-    }
-    public void moveToNext()
-    {
-        int idTemp = CurIndex;
-        if(idTemp++< notesBank.size()-1)
-        {
-            CurIndex++;
-            loadDataInt();}
 
-        }
 
-    public void moveToPrevious()
-    {
-        int idTemp = CurIndex;
-        if(idTemp-- > 0)
-        {
-            CurIndex--;
-            loadDataInt();
-        }
-
-    }
 }

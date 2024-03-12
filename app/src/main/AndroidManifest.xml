@@ -17,7 +17,7 @@
             android:name=".MainActivity3"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityRecycler"
             android:exported="false" />
         <activity
             android:name=".AddNoteActivity"
@@ -26,7 +26,7 @@
             android:name=".EditNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivityRecycler"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -47,7 +47,7 @@ public class TaskModel  {
         return imageUrl;
     }
 
-    public TaskModel(int id, String name, String description) {
+    public TaskModel(int id, String name, String description, String imageUrl, boolean check) {
         this.id = id;
         this.name = name;
         this.description = description;
