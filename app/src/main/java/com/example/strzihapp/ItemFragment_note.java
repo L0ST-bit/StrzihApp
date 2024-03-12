@@ -46,9 +46,9 @@ public class ItemFragment_note extends Fragment {
         recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        NotesAdapter adapter = new NotesAdapter(requireContext(), notes);
+        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(requireContext(), notes);
         recyclerView.setAdapter(adapter);
-        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView.setOnClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TaskModel selectedNote = notes.get(position);
