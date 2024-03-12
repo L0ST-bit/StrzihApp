@@ -25,7 +25,9 @@ public class ItemFragment_note extends Fragment {
 
 
 
+
     private RecyclerView recyclerView;
+    Context context;
     TextView nameView, descView;
 
     private ArrayList<TaskModel> notes= new ArrayList<TaskModel>()
@@ -44,20 +46,20 @@ public class ItemFragment_note extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item_note_list, container, false);
 
         recyclerView = view.findViewById(R.id.list);
-        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes);
+        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, requireContext());
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        adapter.setOnItemClickListener(new MyItemRecyclerViewAdapter() {
-            @Override
-            public void onItemClick(View view, int position) {
-                TaskModel selectedNote = notes.get(position);
-                Intent intent = new Intent(requireContext(), MainActivity3.class);
-                intent.putExtra("name", selectedNote.getName());
-                intent.putExtra("desc", selectedNote.getDescription());
-                startActivity(intent);
+//        adapter.setOnItemClickListener(new MyItemRecyclerViewAdapter() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                TaskModel selectedNote = notes.get(position);
+//                Intent intent = new Intent(requireContext(), MainActivity3.class);
+//                intent.putExtra("name", selectedNote.getName());
+//                intent.putExtra("desc", selectedNote.getDescription());
+//                startActivity(intent);
 
 //                Bundle bundle = new Bundle();
 //                bundle.putString("Key", selectedNote.getName());
@@ -65,8 +67,8 @@ public class ItemFragment_note extends Fragment {
 //                blankFragment2.setArguments(bundle);
 //                ((MainActivity2) requireActivity()).sharedString = selectedNote.getName();
 //                ((MainActivity2) requireActivity()).fr2();
-            }
-        });
+//            }
+//        });
 
 //            public void a(AdapterView<?> parent, View view, int position, long id) {
 //                TaskModel selectedNote = notes.get(position);
