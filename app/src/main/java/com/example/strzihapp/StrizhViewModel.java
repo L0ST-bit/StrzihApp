@@ -50,6 +50,10 @@ public class StrizhViewModel extends AndroidViewModel {
 
     }
 
+    public void setNotesBank(ArrayList<TaskModel> notesBank) {
+        this.notesBank = notesBank;
+    }
+
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {

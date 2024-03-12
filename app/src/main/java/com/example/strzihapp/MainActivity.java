@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
         strizhViewModel.getData().observe(this, data -> {
              notes = data;
@@ -60,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d(TAG, "Модель получена");
 
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            int tempID = extras.getInt(TAG_ID);
+//            notes.get(tempID).setName(extras.getString(TAG_NAME));
+//            notes.get(tempID).setDescription(extras.getString(TAG_DESC));
+//            notes.get(tempID).setCheck(extras.getBoolean(TAG_CHECK));
+//        }
 
         note_name = (EditText) findViewById(R.id.note_name_edit);
         note_description = (EditText)
@@ -89,21 +95,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        edit_button.setOnClickListener(editButton);
 
-
-                Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
-
-
-                startActivityForResult(i,1);
-
-
-
-            }
-        });
+//        edit_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
+//                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
+//
+//
+//                startActivityForResult(i,1);
+//
+//
+//
+//            }
+//        });
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +143,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private View.OnClickListener editButton = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v){
+            getEdit();
+        }
+
+    };
+
+    public void getEdit() {
+        Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
+        i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
+
+
+        startActivityForResult(i,1);
     }
 
     @Override
@@ -196,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
         note_name.setText(notes.get(idNote).getName());
         note_description.setText(notes.get(idNote).getDescription());
-
+//лаб7 запуск фрагмнта
         ItemFragment_note blankFragment = new ItemFragment_note();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -223,12 +248,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("Lifecycle", "onDestroy invoked");
     }
-
+    //лаб7 для фрагмента
 
     public ArrayList<TaskModel> getNotes() {
         return notes;
     }
-
+//лаб7 меню +
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

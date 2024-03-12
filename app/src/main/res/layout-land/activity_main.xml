@@ -14,6 +14,7 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="25dp"
         android:contentDescription="A"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/show_last_button"
         app:srcCompat="@android:drawable/ic_media_next"
@@ -26,6 +27,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:text="@string/edit_button"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
@@ -36,6 +38,7 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="173dp"
         android:contentDescription="B"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/next"
         app:layout_constraintTop_toBottomOf="@+id/show_last_button"
         app:srcCompat="@android:drawable/ic_media_previous"
@@ -49,6 +52,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
         android:text="@string/add_button"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/edit_button"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
@@ -60,6 +64,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:text="@string/show_last_button"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_button" />
 
@@ -68,6 +73,7 @@
         android:layout_width="729dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -88,6 +94,7 @@
 
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/note_name_layout"
@@ -103,12 +110,25 @@
 
     <FrameLayout
         android:id="@+id/frame_one"
-        android:layout_width="347dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
-        app:layout_constraintEnd_toStartOf="@+id/add_button"
+        android:layout_width="365dp"
+        android:layout_height="352dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_two"
+        android:layout_width="389dp"
+        android:layout_height="363dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 

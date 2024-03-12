@@ -12,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class EditNoteActivity extends AppCompatActivity {
 
     private static final String TAG_NAME = "name";
@@ -22,6 +24,7 @@ public class EditNoteActivity extends AppCompatActivity {
     private EditText note_name, note_description;
     private Button save_button;
     private CheckBox checkBox_;
+    private int idNote;
 
 
     @Override
@@ -42,7 +45,7 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // Извлекаем данные из Intent
-        int idNote = intent.getIntExtra(TAG_ID, 0);
+        idNote = intent.getIntExtra(TAG_ID, 0);
         String name = intent.getStringExtra(TAG_NAME);
         String description = intent.getStringExtra(TAG_DESC);
         boolean check = intent.getBooleanExtra(TAG_CHECK, false);
@@ -62,7 +65,7 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent resultIntent = new Intent();
+                Intent resultIntent = new Intent(EditNoteActivity.this, MainActivity.class);
                 resultIntent.putExtra(TAG_NAME,note_name.getText().toString());
                 resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
                 resultIntent.putExtra(TAG_ID,idNote);
@@ -72,6 +75,10 @@ public class EditNoteActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 
 

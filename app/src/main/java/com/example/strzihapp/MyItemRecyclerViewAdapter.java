@@ -28,9 +28,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     private static final String TAG_CHECK = "check";
     private ArrayList<TaskModel> notes;
     private Context context;
-    public MyItemRecyclerViewAdapter(ArrayList<TaskModel> notes, Context context) {
+    private MainActivity mainActivity;
+    public MyItemRecyclerViewAdapter(ArrayList<TaskModel> notes, Context context, MainActivity mainActivity) {
         this.notes = notes;
         this.context = context;
+        this.mainActivity = mainActivity;
     }
 
 
@@ -63,12 +65,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.itemView.setOnClickListener(v -> {
 
-            Intent intent = new Intent(context, EditNoteActivity.class);
-            intent.putExtra(TAG_NAME, selectedNote.getName());
-            intent.putExtra(TAG_DESC, selectedNote.getDescription());
-            intent.putExtra(TAG_ID, selectedNote.getId());
-            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
-            context.startActivity(intent);
+            mainActivity.getEdit();
+//
+//            Intent intent = new Intent(context, EditNoteActivity.class);
+//            intent.putExtra(TAG_NAME, selectedNote.getName());
+//            intent.putExtra(TAG_DESC, selectedNote.getDescription());
+//            intent.putExtra(TAG_ID, selectedNote.getId());
+//            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
+//            context.startActivity(intent);
         });
     }
 
@@ -76,6 +80,8 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public int getItemCount() {
         return notes.size();
     }
+
+
 
 
 

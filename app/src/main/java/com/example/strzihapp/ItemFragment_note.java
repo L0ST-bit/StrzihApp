@@ -25,6 +25,7 @@ public class ItemFragment_note extends Fragment {
     private CheckBox checkBox;
     ArrayList<TaskModel> notes;
     private RecyclerView recyclerView;
+    private MainActivity mainActivityRecycler;
 //    ArrayList<TaskModel> notes = new ArrayList<TaskModel>()
 //    {
 //        {
@@ -53,8 +54,10 @@ public class ItemFragment_note extends Fragment {
 
 
 
+        mainActivityRecycler = (MainActivity) getActivity();
+
         recyclerView = view.findViewById(R.id.list);
-        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, requireContext());
+        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, requireContext(),mainActivityRecycler);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
