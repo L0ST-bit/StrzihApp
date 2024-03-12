@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_DESC = "description";
     private static final String TAG_ID = "id_note";
+    private static final String TAG_CHECK = "check";
+
     private EditText note_name, note_description;
     private Button add_button, edit_button, show_last_button;
     private ImageButton next, previous;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Lifecycle", "onCreate invoked");
+
+
 
 
 
@@ -61,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
         previous = (ImageButton) findViewById(R.id.previous);
         next = (ImageButton) findViewById(R.id.next);
 
+        String name = getIntent().getStringExtra("name");
+        String description = getIntent().getStringExtra("desc");
 
+        note_description.setText(description.toString());
+        note_name.setText(name.toString());
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,17 +141,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
+        //edit
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
 
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
             int id = data.getIntExtra(TAG_ID, 0);
+            boolean check = data.getBooleanExtra(TAG_CHECK, false);
 
             notes.get(id).setName(name);
             notes.get(id).setDescription(description);
             note_name.setText(name);
             note_description.setText(description);
+            //add
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
 

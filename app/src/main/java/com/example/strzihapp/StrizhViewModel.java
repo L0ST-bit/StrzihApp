@@ -48,13 +48,13 @@ public class StrizhViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        Log.d(TAG, "view model Почти бух");
+
     }
 
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1"));
+            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", "jk",false));
             add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2"));
             add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3"));
         }

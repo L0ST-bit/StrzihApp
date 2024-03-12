@@ -50,4 +50,14 @@
             android:hint="@string/note_description" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/edit_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="11dp"
+        android:text="Выполнено"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_save_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

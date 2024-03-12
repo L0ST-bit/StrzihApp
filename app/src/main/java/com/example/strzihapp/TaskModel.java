@@ -4,6 +4,21 @@ public class TaskModel  {
     private int id;
     private String name;
     private String description;
+    private String imageUrl;
+    private boolean check;
+
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -28,11 +43,16 @@ public class TaskModel  {
     public String getDescription() {
         return description;
     }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
     public TaskModel(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.imageUrl = imageUrl;
+        this.check = check;
     }
 }
 

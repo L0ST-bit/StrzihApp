@@ -63,7 +63,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.itemView.setOnClickListener(v -> {
 
-            Intent intent = new Intent(context,MainActivity3.class);
+            Intent intent = new Intent(context,MainActivity.class);
             intent.putExtra("name", selectedNote.getName());
             intent.putExtra("desc", selectedNote.getDescription());
             context.startActivity(intent);
