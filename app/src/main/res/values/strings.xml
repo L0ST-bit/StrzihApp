@@ -13,4 +13,6 @@
     <string name="h1">My text message1212</string>
     <string name="h2">My text messagsase</string>
     <string name="h3">My text messagsase</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
