@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
+public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
     private ArrayList<TaskModel> notes;
 
-    public NotesAdapter(ArrayList<TaskModel> notes) {
+    public MyItemRecyclerViewAdapter (ArrayList<TaskModel> notes) {
         this.notes = notes;
     }
 
@@ -31,13 +31,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     @Override
-    public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyItemRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NotesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MyItemRecyclerViewAdapter.ViewHolder holder, int position) {
         TaskModel note = notes.get(position);
         holder.textViewNoteTitle.setText(note.getName());
     }
