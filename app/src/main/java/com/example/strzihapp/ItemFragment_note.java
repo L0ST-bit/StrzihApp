@@ -44,32 +44,50 @@ public class ItemFragment_note extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item_note_list, container, false);
 
         recyclerView = view.findViewById(R.id.list);
+        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes);
+        recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(requireContext(), notes);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setOnClickListener(new AdapterView.OnItemClickListener() {
+
+        adapter.setOnItemClickListener(new MyItemRecyclerViewAdapter() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
                 TaskModel selectedNote = notes.get(position);
                 Intent intent = new Intent(requireContext(), MainActivity3.class);
                 intent.putExtra("name", selectedNote.getName());
                 intent.putExtra("desc", selectedNote.getDescription());
-                //startActivity(intent);
+                startActivity(intent);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("Key", selectedNote.getName());
-                BlankFragment2 blankFragment2 = new BlankFragment2();
-                blankFragment2.setArguments(bundle);
-                ((MainActivity2) requireActivity()).sharedString = selectedNote.getName();
-                ((MainActivity2) requireActivity()).fr2();
-
-//                nameView = view.findViewById(R.id.textViewName);
-//                descView = view.findViewById(R.id.textView2Desc);
-//                nameView.setText(selectedNote.getName());
-//                descView.setText(selectedNote.getDescription());
+//                Bundle bundle = new Bundle();
+//                bundle.putString("Key", selectedNote.getName());
+//                Fr blankFragment2 = new BlankFragment2();
+//                blankFragment2.setArguments(bundle);
+//                ((MainActivity2) requireActivity()).sharedString = selectedNote.getName();
+//                ((MainActivity2) requireActivity()).fr2();
             }
         });
+
+//            public void a(AdapterView<?> parent, View view, int position, long id) {
+//                TaskModel selectedNote = notes.get(position);
+//                Intent intent = new Intent(requireContext(), MainActivity3.class);
+//                intent.putExtra("name", selectedNote.getName());
+//                intent.putExtra("desc", selectedNote.getDescription());
+//                //startActivity(intent);
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putString("Key", selectedNote.getName());
+//                BlankFragment2 blankFragment2 = new BlankFragment2();
+//                blankFragment2.setArguments(bundle);
+//                ((MainActivity2) requireActivity()).sharedString = selectedNote.getName();
+//                ((MainActivity2) requireActivity()).fr2();
+//
+////                nameView = view.findViewById(R.id.textViewName);
+////                descView = view.findViewById(R.id.textView2Desc);
+////                nameView.setText(selectedNote.getName());
+////                descView.setText(selectedNote.getDescription());
+//            }
+//        });
 
 
 
