@@ -161,14 +161,14 @@ public class MainActivity extends AppCompatActivity {
     {
         @Override
         public void onClick(View v){
-            getEdit();
+            getEdit(idNote);
         }
 
     };
 
-    public void getEdit() {
+    public void getEdit(int id) {
         Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-        i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
+        i.putExtra(TAG_NAME,notes.get(id).getName()).putExtra(TAG_DESC,notes.get(id).getDescription()).putExtra(TAG_ID,id).putExtra(TAG_CHECK, notes.get(id).isCheck());
 
 
         startActivityForResult(i,1);

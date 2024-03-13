@@ -74,7 +74,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             }
             else
             {
-                mainActivity.getEdit();
+                mainActivity.getEdit(selectedNote.getId());
             }
 
 
