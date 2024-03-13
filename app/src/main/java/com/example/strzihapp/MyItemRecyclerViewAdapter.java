@@ -66,16 +66,18 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.itemView.setOnClickListener(v -> {
 
-            //mainActivity.getEdit();
-            mainActivity.startFragment(selectedNote.getId());
 
-//
-//            Intent intent = new Intent(context, EditNoteActivity.class);
-//            intent.putExtra(TAG_NAME, selectedNote.getName());
-//            intent.putExtra(TAG_DESC, selectedNote.getDescription());
-//            intent.putExtra(TAG_ID, selectedNote.getId());
-//            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
-//            context.startActivity(intent);
+            if(mainActivity.isTabletDevice())
+            {
+                mainActivity.startFragment(selectedNote.getId());
+
+            }
+            else
+            {
+                mainActivity.getEdit();
+            }
+
+
 
 
         });

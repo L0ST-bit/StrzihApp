@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -42,11 +43,27 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<TaskModel> notes = new ArrayList<TaskModel>();
 
 
+
+    public boolean isTabletDevice() {
+        boolean tablet;
+        int screenLayout = getResources().getConfiguration().screenLayout;
+        if ((screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            tablet = true;
+        } else {
+            tablet = false;
+        }
+        return tablet;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Lifecycle", "onCreate invoked");
+
+
+
 
 
 
@@ -60,13 +77,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d(TAG, "Модель получена");
 
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            int tempID = extras.getInt(TAG_ID);
-//            notes.get(tempID).setName(extras.getString(TAG_NAME));
-//            notes.get(tempID).setDescription(extras.getString(TAG_DESC));
-//            notes.get(tempID).setCheck(extras.getBoolean(TAG_CHECK));
-//        }
+
 
         note_name = (EditText) findViewById(R.id.note_name_edit);
         note_description = (EditText)
