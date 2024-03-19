@@ -89,4 +89,13 @@ public class StrizhViewModel extends AndroidViewModel {
         }
 
     }
+
+    public void updateNote(int id, String name, String description, boolean check) {
+        TaskModel updatedNote = new TaskModel(id, name, description, "", check);
+        if (notesBank != null && id < notesBank.size()) {
+            notesBank.set(id, updatedNote);
+            data.setValue(notesBank); // Уведомляем об изменении данных
+        }
+    }
+
 }

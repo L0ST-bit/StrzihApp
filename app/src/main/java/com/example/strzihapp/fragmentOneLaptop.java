@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAdapter.OnNoteListener {
+public class fragmentOneLaptop extends Fragment implements MyItemRecyclerViewAdapter.OnNoteListener {
 
     private static final String TAG_NAME = "name";
     private static final String TAG_DESC = "description";
@@ -38,7 +40,7 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-                MainActivity mainActivityRecycler = (MainActivity) getActivity();
+        MainActivity mainActivityRecycler = (MainActivity) getActivity();
         if (mainActivityRecycler != null) {
             notes = mainActivityRecycler.getNotes();
         }
@@ -64,16 +66,23 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
         return view;
     }
     public void onNoteEdit(TaskModel selectedNote) {
-        Intent intent = new Intent(getActivity(), EditNoteActivity.class);
+        Bundle args = new Bundle();
+        args.putString(TAG_NAME, notes.get(selectedNote.getId()).getName());
+        args.putString(TAG_DESC, notes.get(selectedNote.getId()).getDescription());
+        args.putBoolean(TAG_CHECK, notes.get(selectedNote.getId()).isCheck());
 
-        intent.putExtra(TAG_ID, selectedNote.getId());
-        intent.putExtra(TAG_NAME, selectedNote.getName());
-        intent.putExtra(TAG_DESC, selectedNote.getDescription());
-        intent.putExtra(TAG_CHECK, selectedNote.isCheck());
-        // Используйте getActivity().startActivityForResult(), если вы находитесь во фрагменте
-        getActivity().startActivityForResult(intent, 1);
+        BlankFragment_frame_two blankFragment1 = new BlankFragment_frame_two();
+        blankFragment1.setArguments(args);
+
+
+        FragmentTransaction ft2 = requireActivity().getSupportFragmentManager().beginTransaction();
+        ft2.replace(R.id.frame_two, blankFragment1);
+        ft2.commit();
 
     }
 
 
+    public void startFragment(int id){
+
+    }
 }

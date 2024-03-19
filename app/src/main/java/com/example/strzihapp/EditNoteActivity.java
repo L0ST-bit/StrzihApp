@@ -1,6 +1,7 @@
 package com.example.strzihapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,11 +27,14 @@ public class EditNoteActivity extends AppCompatActivity {
     private CheckBox checkBox_;
     private int idNote;
 
+    private StrizhViewModel strizhViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
+        strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
 
         note_name = findViewById(R.id.edit_note_name_edit);
         note_description = findViewById(R.id.edit_note_description_edit);
@@ -40,7 +44,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
 
 
-
+        ArrayList<TaskModel> currentNotes = strizhViewModel.getData().getValue();
 
         Intent intent = getIntent();
 
@@ -64,13 +68,17 @@ public class EditNoteActivity extends AppCompatActivity {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
+
             {
+
+
                 Intent resultIntent = new Intent(EditNoteActivity.this, MainActivity.class);
                 resultIntent.putExtra(TAG_NAME,note_name.getText().toString());
                 resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
                 resultIntent.putExtra(TAG_ID,idNote);
                 resultIntent.putExtra(TAG_CHECK,checkBox_.isChecked());
                 setResult(Activity.RESULT_OK, resultIntent);
+
                 finish();
             }
         });

@@ -6,6 +6,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -29,11 +30,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     private static final String TAG_CHECK = "check";
     private ArrayList<TaskModel> notes;
     private Context context;
-    private MainActivity mainActivity;
-    public MyItemRecyclerViewAdapter(ArrayList<TaskModel> notes, Context context, MainActivity mainActivity) {
+    private OnNoteListener onNoteListener;
+    public interface OnNoteListener {
+        void onNoteEdit(TaskModel note);
+    }
+
+    public MyItemRecyclerViewAdapter(ArrayList<TaskModel> notes, Context context, OnNoteListener onNoteListener) {
         this.notes = notes;
         this.context = context;
-        this.mainActivity = mainActivity;
+        this.onNoteListener = onNoteListener;
+
     }
 
 
@@ -61,21 +67,38 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(MyItemRecyclerViewAdapter.ViewHolder holder, int position) {
         TaskModel selectedNote = notes.get(position);
+
+
+        //ArrayList<TaskModel> currentNotes = strizhViewModel.getData().getValue();
         holder.textViewNoteTitle.setText(selectedNote.getName());
         holder.checkBox.setChecked(selectedNote.isCheck());
 
         holder.itemView.setOnClickListener(v -> {
 
-
-            if(mainActivity.isTabletDevice())
-            {
-                mainActivity.startFragment(selectedNote.getId());
-
+            if (onNoteListener != null) {
+                onNoteListener.onNoteEdit(selectedNote);
             }
-            else
-            {
-                mainActivity.getEdit(selectedNote.getId());
-            }
+
+//
+//            Intent intent = new Intent(context, EditNoteActivity.class);
+
+//            intent.putExtra(TAG_ID, selectedNote.getId());
+//            intent.putExtra(TAG_NAME, selectedNote.getName());
+//            intent.putExtra(TAG_DESC, selectedNote.getDescription());
+//            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
+//
+//            ((Activity) context).startActivityForResult(intent, 1);
+
+
+//            if(mainActivity.isTabletDevice())
+//            {
+//                mainActivity.startFragment(selectedNote.getId());
+//
+//            }
+//            else
+//            {
+//                mainActivity.getEdit(selectedNote.getId());
+//            }
 
 
 

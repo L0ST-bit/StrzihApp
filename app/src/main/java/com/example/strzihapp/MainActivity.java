@@ -233,12 +233,28 @@ public class MainActivity extends AppCompatActivity {
 
         note_name.setText(notes.get(idNote).getName());
         note_description.setText(notes.get(idNote).getDescription());
-//лаб7 запуск фрагмнта
-        ItemFragment_note blankFragment = new ItemFragment_note();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_one, blankFragment);
-        ft.commit();
+        strizhViewModel.getData().observe(this, data -> {
+            notes = data;
+        });
+//лаб7 запуск фрагмнта
+        if(isTabletDevice())
+        {
+
+            fragmentOneLaptop fop = new fragmentOneLaptop();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame_one, fop);
+            ft.commit();
+        }
+        else {
+            ItemFragment_note blankFragment = new ItemFragment_note();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame_one, blankFragment);
+            ft.commit();
+        }
+
 
 
 
@@ -269,19 +285,19 @@ public class MainActivity extends AppCompatActivity {
         return notes;
     }
 
-    public void startFragment(int id){
-        Bundle args = new Bundle();
-        args.putString(TAG_NAME, notes.get(id).getName());
-        args.putString(TAG_DESC, notes.get(id).getDescription());
-        args.putBoolean(TAG_CHECK, notes.get(id).isCheck());
-
-        BlankFragment_frame_two blankFragment1 = new BlankFragment_frame_two();
-        blankFragment1.setArguments(args);
-
-        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-        ft2.replace(R.id.frame_two, blankFragment1);
-        ft2.commit();
-    }
+//    public void startFragment(int id){
+//        Bundle args = new Bundle();
+//        args.putString(TAG_NAME, notes.get(id).getName());
+//        args.putString(TAG_DESC, notes.get(id).getDescription());
+//        args.putBoolean(TAG_CHECK, notes.get(id).isCheck());
+//
+//        BlankFragment_frame_two blankFragment1 = new BlankFragment_frame_two();
+//        blankFragment1.setArguments(args);
+//
+//        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+//        ft2.replace(R.id.frame_two, blankFragment1);
+//        ft2.commit();
+//    }
 
 //лаб7 меню +
     @Override
