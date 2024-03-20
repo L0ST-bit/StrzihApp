@@ -1,13 +1,18 @@
 package com.example.strzihapp;
 
+import static io.reactivex.rxjava3.schedulers.Schedulers.start;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Dao;
 
+import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -76,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
             idNote = index;
         });
         Log.d(TAG, "Модель получена");
+
+
+
+
 
 
 
@@ -185,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
-            int id = data.getIntExtra(TAG_ID, 0);
+            int id = data.getIntExtra(TAG_ID, 1)-1;
             boolean check = data.getBooleanExtra(TAG_CHECK, false);
 
             notes.get(id).setName(name);
@@ -194,16 +203,27 @@ public class MainActivity extends AppCompatActivity {
             note_name.setText(name);
             note_description.setText(description);
 
+            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+            strizhViewModel.updateNote(notes.get(id), noteDao);
+
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
 
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
 
-            notes.add(new TaskModel(notes.size(), name, description, "", false));
+            notes.add(new TaskModel(notes.size()+1, name, description, false));
             strizhViewModel.showLast();
             note_name.setText(notes.get(idNote).getName());
             note_description.setText(notes.get(idNote).getDescription());
+
+            //лаб8
+            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+            strizhViewModel.insertNote(notes.get(notes.size()-1), noteDao);
+
+
+
+
 
         }
     }
@@ -230,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("Lifecycle", "onResume invoked");
+        //insertData(this);
 
         note_name.setText(notes.get(idNote).getName());
         note_description.setText(notes.get(idNote).getDescription());
@@ -258,7 +279,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        insertData(this);
+
+
+
+
+
     }
+    public void insertData(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        boolean hasRun = prefs.getBoolean("hasRun", false);
+        if (!hasRun) {
+            for (int i = 0; i<notes.size();i++) {
+                Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+                strizhViewModel.insertNote(notes.get(i), noteDao);
+            }
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("hasRun", true);
+            editor.apply();
+        }
+    }
+
 
 
 

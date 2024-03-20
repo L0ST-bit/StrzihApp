@@ -1,16 +1,21 @@
 package com.example.strzihapp;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "NotesTable")
 public class TaskModel  {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "description")
     private String description;
-    private String imageUrl;
+    @ColumnInfo(name = "check")
     private boolean check;
 
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public void setCheck(boolean check) {
         this.check = check;
@@ -43,15 +48,12 @@ public class TaskModel  {
     public String getDescription() {
         return description;
     }
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public TaskModel(int id, String name, String description, String imageUrl, boolean check) {
+
+    public TaskModel(int id, String name, String description, boolean check) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.imageUrl = imageUrl;
         this.check = check;
     }
 }

@@ -79,26 +79,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 onNoteListener.onNoteEdit(selectedNote);
             }
 
-//
-//            Intent intent = new Intent(context, EditNoteActivity.class);
 
-//            intent.putExtra(TAG_ID, selectedNote.getId());
-//            intent.putExtra(TAG_NAME, selectedNote.getName());
-//            intent.putExtra(TAG_DESC, selectedNote.getDescription());
-//            intent.putExtra(TAG_CHECK, selectedNote.isCheck());
-//
-//            ((Activity) context).startActivityForResult(intent, 1);
-
-
-//            if(mainActivity.isTabletDevice())
-//            {
-//                mainActivity.startFragment(selectedNote.getId());
-//
-//            }
-//            else
-//            {
-//                mainActivity.getEdit(selectedNote.getId());
-//            }
 
 
 

@@ -56,9 +56,9 @@ public class RecyclerViewModel extends AndroidViewModel {
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", TAG, false));
-            add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2", TAG, false));
-            add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3", TAG, false));
+            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", false));
+            add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2", false));
+            add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3", false));
         }
 
     };

@@ -4,13 +4,31 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StrizhViewModel extends AndroidViewModel {
     private static final String TAG = "StrizhViewModel";
     int CurIndex;
+
+    private NotesRepo repository;
+    private LiveData<List<TaskModel>> allTasks;
+
+    public StrizhViewModel(Application application) {
+        super(application);
+        repository = new NotesRepo(application);
+        allTasks = repository.getAllTasks();
+    }
+
+
+    LiveData<List<TaskModel>> getAllTasks() { return allTasks; }
+
+    public void insert(TaskModel task) { repository.insert(task); }
+
+
 
     private MutableLiveData<ArrayList<TaskModel>> data;
     private MutableLiveData<Integer> index;
@@ -39,9 +57,7 @@ public class StrizhViewModel extends AndroidViewModel {
 
     }
 
-    public StrizhViewModel(@NonNull Application application) {
-        super(application);
-    }
+
 
 
     @Override
@@ -57,9 +73,9 @@ public class StrizhViewModel extends AndroidViewModel {
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel (0, "Заметка про лабы1", "Нужно всё сделать1", "", false));
-            add(new TaskModel (1, "Заметка про лабы2", "Нужно всё сделать2", "", true));
-            add(new TaskModel (2, "Заметка про лабы3", "Нужно всё сделать3", "", false));
+            add(new TaskModel (1, "Заметка про лабы1", "Нужно всё сделать1", false));
+            add(new TaskModel (2, "Заметка про лабы2", "Нужно всё сделать2", true));
+
         }
 
     };
@@ -90,12 +106,19 @@ public class StrizhViewModel extends AndroidViewModel {
 
     }
 
-    public void updateNote(int id, String name, String description, boolean check) {
-        TaskModel updatedNote = new TaskModel(id, name, description, "", check);
-        if (notesBank != null && id < notesBank.size()) {
-            notesBank.set(id, updatedNote);
-            data.setValue(notesBank); // Уведомляем об изменении данных
-        }
+
+    protected void insertNote(TaskModel note, Dao_DB Dao)
+    {
+
+
+        new Async(Dao, "insert").execute(note);
+
     }
+    protected void updateNote(TaskModel note, Dao_DB Dao)
+    {
+        new Async(Dao, "update").execute(note);
+
+    }
+
 
 }
