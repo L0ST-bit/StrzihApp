@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,21 +28,23 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
     private static final String TAG_ID = "id_note";
     private static final String TAG_CHECK = "check";
 
-    private CheckBox checkBox;
+
     ArrayList<TaskModel> notes;
     private RecyclerView recyclerView;
-    //private MainActivity mainActivityRecycler;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private OnRefreshListener refreshListener;
+
+    public interface OnRefreshListener {
+        void onRefreshData();
+    }
 
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-                MainActivity mainActivityRecycler = (MainActivity) getActivity();
-        if (mainActivityRecycler != null) {
-            notes = mainActivityRecycler.getNotes();
-        }
+
     }
 
     @Override
@@ -49,10 +52,31 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_note_list, container, false);
 
+        swipeRefreshLayout =  view.findViewById(R.id.swipe_refresh_layout);
+        MainActivity mainActivityRecycler = (MainActivity) getActivity();
+        if (mainActivityRecycler != null) {
+            notes = mainActivityRecycler.getNotes();
+
+        }
 
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (refreshListener != null) {
+                    refreshListener.onRefreshData();
+                }
+                swipeRefreshLayout.setRefreshing(false); // Заканчиваем анимацию обновления
+            }
+        });
+
+
+
+
+        //Log.d("sssssssssssssssssssssssssssssssssssssssssssssssssssssss", notes.get(1).getName());
         //mainActivityRecycler = (MainActivity) getActivity();
-
+        //String name = notes.get(0).getName();
         recyclerView = view.findViewById(R.id.list);
         MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, getContext(),this);
         recyclerView.setAdapter(adapter);
@@ -63,6 +87,9 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
 
         return view;
     }
+
+
+
     public void onNoteEdit(TaskModel selectedNote) {
         Intent intent = new Intent(getActivity(), EditNoteActivity.class);
 
@@ -70,7 +97,7 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
         intent.putExtra(TAG_NAME, selectedNote.getName());
         intent.putExtra(TAG_DESC, selectedNote.getDescription());
         intent.putExtra(TAG_CHECK, selectedNote.isCheck());
-        // Используйте getActivity().startActivityForResult(), если вы находитесь во фрагменте
+
         getActivity().startActivityForResult(intent, 1);
 
     }

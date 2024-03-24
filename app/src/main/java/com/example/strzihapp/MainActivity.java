@@ -4,10 +4,13 @@ import static io.reactivex.rxjava3.schedulers.Schedulers.start;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Dao;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.app.Activity;
@@ -25,10 +28,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemFragment_note.OnRefreshListener {
 
 
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton next, previous;
     private int idNote;
     private StrizhViewModel strizhViewModel;
+
 
     private ArrayList<TaskModel> notes = new ArrayList<TaskModel>();
 
@@ -61,11 +65,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("Lifecycle", "onCreate invoked");
+
 
 
 
@@ -81,6 +88,32 @@ public class MainActivity extends AppCompatActivity {
             idNote = index;
         });
         Log.d(TAG, "Модель получена");
+
+
+//        strizhViewModel.getAllTasksAsync().thenAcceptAsync(tasks -> {
+//
+//
+//            ArrayList<TaskModel> temp = new ArrayList<>(tasks);
+//
+//            strizhViewModel.setNotesBank(temp);
+//            runOnUiThread(() -> {
+//                // Обновление адаптера RecyclerView здесь
+//            });
+//        }, ContextCompat.getMainExecutor(this));
+
+        strizhViewModel.getAllTasks().observe(this, new Observer<List<TaskModel>>() {
+            @Override
+            public void onChanged(List<TaskModel> taskModels) {
+            ArrayList<TaskModel> temp = new ArrayList<>(taskModels);
+
+            strizhViewModel.setNotesBank(temp);
+            }
+        });
+
+
+
+
+
 
 
 
@@ -164,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
+
     }
 
     private View.OnClickListener editButton = new View.OnClickListener()
@@ -231,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -253,8 +291,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Lifecycle", "onResume invoked");
         //insertData(this);
 
-        note_name.setText(notes.get(idNote).getName());
-        note_description.setText(notes.get(idNote).getDescription());
+        note_name.setText(notes.get(0).getName());
+        note_description.setText(notes.get(0).getDescription());
 
         strizhViewModel.getData().observe(this, data -> {
             notes = data;
@@ -325,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
     //лаб7 для фрагмента
 
     public ArrayList<TaskModel> getNotes() {
+
         return notes;
     }
 
@@ -361,5 +400,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onRefreshData() {
+
+    }
 
 }

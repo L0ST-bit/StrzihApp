@@ -26,6 +26,9 @@ public interface Dao_DB {
     @Query("SELECT * FROM NotesTable")
     LiveData<List<TaskModel>> getAllTasks();
 
+    @Query("SELECT * FROM NotesTable")
+    List<TaskModel> getAllNotes();
+
     @Query("SELECT * FROM NotesTable WHERE id = :taskId")
     LiveData<TaskModel> getTaskById(int taskId);
 }

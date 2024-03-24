@@ -3,12 +3,14 @@ package com.example.strzihapp;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class StrizhViewModel extends AndroidViewModel {
     private static final String TAG = "StrizhViewModel";
@@ -24,13 +26,25 @@ public class StrizhViewModel extends AndroidViewModel {
     }
 
 
-    LiveData<List<TaskModel>> getAllTasks() { return allTasks; }
+
+
+    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
+        return repository.getAllTasksAsync();
+    }
+
+
 
     public void insert(TaskModel task) { repository.insert(task); }
     public void update(TaskModel task) { repository.update(task); }
     public void delete(TaskModel task)
     {
+
+        notesBank.remove(task.getId()-1);
         repository.delete(task);
+    }
+
+    public LiveData<List<TaskModel>> getAllTasks() {
+        return allTasks;
     }
 
 
@@ -112,18 +126,18 @@ public class StrizhViewModel extends AndroidViewModel {
     }
 
 
-    protected void insertNote(TaskModel note, Dao_DB Dao)
-    {
-
-
-        new Async(Dao, "insert").execute(note);
-
-    }
-    protected void updateNote(TaskModel note, Dao_DB Dao)
-    {
-        new Async(Dao, "update").execute(note);
-
-    }
+//    protected void insertNote(TaskModel note, Dao_DB Dao)
+//    {
+//
+//
+//        new Async(Dao, "insert").execute(note);
+//
+//    }
+//    protected void updateNote(TaskModel note, Dao_DB Dao)
+//    {
+//        new Async(Dao, "update").execute(note);
+//
+//    }
 
 
 

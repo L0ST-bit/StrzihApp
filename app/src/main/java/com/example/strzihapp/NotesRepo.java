@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,7 +15,7 @@ public class NotesRepo {
     private Dao_DB taskDao;
     private LiveData<List<TaskModel>> allTasks;
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(2);
+    private ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     NotesRepo(Application application) {
         DB_notes db = DB_notes.getDatabase(application);
@@ -24,6 +26,12 @@ public class NotesRepo {
     LiveData<List<TaskModel>> getAllTasks() {
         return allTasks;
     }
+    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
+        return CompletableFuture.supplyAsync(() -> taskDao.getAllNotes(), executorService);
+    }
+
+
+
 
     void insert(TaskModel task) {
         //new insertAsyncTask(taskDao).execute(task);
@@ -37,6 +45,7 @@ public class NotesRepo {
         //new insertAsyncTask(taskDao).execute(task);
         executorService.execute(() -> taskDao.delete(task));
     }
+
 
 
     private static class insertAsyncTask extends AsyncTask<TaskModel, Void, Void> {
