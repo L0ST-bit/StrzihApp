@@ -32,7 +32,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     private Context context;
     private OnNoteListener onNoteListener;
     public interface OnNoteListener {
-        void onNoteEdit(TaskModel note);
+        void onNoteEdit(TaskModel note, int position);
     }
 
     public MyItemRecyclerViewAdapter(ArrayList<TaskModel> notes, Context context, OnNoteListener onNoteListener) {
@@ -80,7 +80,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.itemView.setOnClickListener(v -> {
 
             if (onNoteListener != null) {
-                onNoteListener.onNoteEdit(selectedNote);
+                onNoteListener.onNoteEdit(selectedNote, position);
             }
 
 

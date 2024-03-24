@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class StrizhViewModel extends AndroidViewModel {
-    private static final String TAG = "StrizhViewModel";
-    int CurIndex;
 
     private NotesRepo repository;
     private LiveData<List<TaskModel>> allTasks;
@@ -24,13 +22,6 @@ public class StrizhViewModel extends AndroidViewModel {
         repository = new NotesRepo(application);
         allTasks = repository.getAllTasks();
     }
-
-
-
-
-//    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
-//        return repository.getAllTasksAsync();
-//    }
 
 
 
@@ -50,7 +41,7 @@ public class StrizhViewModel extends AndroidViewModel {
 
 
     private MutableLiveData<ArrayList<TaskModel>> data;
-    private MutableLiveData<Integer> index;
+
 
     public MutableLiveData<ArrayList<TaskModel>> getData() {
         if (data == null) {
@@ -59,25 +50,12 @@ public class StrizhViewModel extends AndroidViewModel {
         }
         return data;
     }
-//    public MutableLiveData<Integer> getDataInt() {
-//        if (index == null) {
-//            index = new MutableLiveData<Integer>();
-//            loadDataInt();
-//        }
-//        return index;
-//    }
+
 
     private void loadData() {
         data.setValue(notesBank);
 
     }
-//    private void loadDataInt() {
-//        index.setValue(CurIndex);
-//
-//    }
-
-
-
 
     @Override
     protected void onCleared() {
@@ -96,55 +74,12 @@ public class StrizhViewModel extends AndroidViewModel {
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel (1, "Заметка про лабы1", "Нужно всё сделать1", false));
-            add(new TaskModel (2, "Заметка про лабы2", "Нужно всё сделать2", true));
+            add(new TaskModel ( "Заметка про лабы1", "Нужно всё сделать1", false));
+            add(new TaskModel ( "Заметка про лабы2", "Нужно всё сделать2", true));
 
         }
 
     };
-
-//    public void showLast()
-//    {
-//        CurIndex = notesBank.size()-1;
-//        //loadDataInt();
-//    }
-//    public void moveToNext()
-//    {
-//        int idTemp = CurIndex;
-//        if(idTemp++< notesBank.size()-1)
-//        {
-//            CurIndex++;
-//            //loadDataInt();}
-//
-//        }
-//
-//    public void moveToPrevious()
-//    {
-//        int idTemp = CurIndex;
-//        if(idTemp-- > 0)
-//        {
-//            CurIndex--;
-//            //loadDataInt();
-//        }
-//
-//    }
-
-
-//    protected void insertNote(TaskModel note, Dao_DB Dao)
-//    {
-//
-//
-//        new Async(Dao, "insert").execute(note);
-//
-//    }
-//    protected void updateNote(TaskModel note, Dao_DB Dao)
-//    {
-//        new Async(Dao, "update").execute(note);
-//
-//    }
-
-
-
 
 
 }

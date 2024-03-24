@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
     private static final String TAG_CHECK = "check";
     private static final String TAG_DELETE = "delete";
 
-    private EditText note_name, note_description;
-    private Button add_button, edit_button, show_last_button;
-    private ImageButton next, previous;
-    private int idNote;
+
     private StrizhViewModel strizhViewModel;
 
 
@@ -76,142 +73,24 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
 
 
 
-
-
-
-
-
         strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
-        strizhViewModel.getData().observe(this, data -> {
-             notes = data;
-        });
-//        strizhViewModel.getDataInt().observe(this, index -> {
-//            idNote = index;
-//        });
-//        Log.d(TAG, "Модель получена");
 
 
-//        strizhViewModel.getAllTasksAsync().thenAcceptAsync(tasks -> {
-//
-//
-//            ArrayList<TaskModel> temp = new ArrayList<>(tasks);
-//
-//            strizhViewModel.setNotesBank(temp);
-//            runOnUiThread(() -> {
-//                // Обновление адаптера RecyclerView здесь
-//            });
-//        }, ContextCompat.getMainExecutor(this));
 
+        //лаб8 чтение
         strizhViewModel.getAllTasks().observe(this, new Observer<List<TaskModel>>() {
             @Override
             public void onChanged(List<TaskModel> taskModels) {
             ArrayList<TaskModel> temp = new ArrayList<>(taskModels);
 
             strizhViewModel.setNotesBank(temp);
-            //notes = new ArrayList<TaskModel>(taskModels);
+            notes = strizhViewModel.getNotesBank();
+
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-        note_name = (EditText) findViewById(R.id.note_name_edit);
-        note_description = (EditText)
-                findViewById(R.id.note_description_edit);
-        add_button = (Button) findViewById(R.id.add_button);
-        edit_button = (Button) findViewById(R.id.edit_button);
-        show_last_button = (Button) findViewById(R.id.show_last_button);
-        previous = (ImageButton) findViewById(R.id.previous);
-        next = (ImageButton) findViewById(R.id.next);
-
-
-//        add_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, AddNoteActivity.class);
-//                startActivityForResult(i,2);
-//            }
-//        });
-//        show_last_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                idNote = notes.size()-1;
-//                note_name.setText(notes.get(idNote).getName());
-//                note_description.setText(notes.get(idNote).getDescription());
-//                strizhViewModel.showLast();
-//
-//            }
-//        });
-
-//        edit_button.setOnClickListener(editButton);
-
-//        edit_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-//                i.putExtra(TAG_NAME,notes.get(idNote).getName()).putExtra(TAG_DESC,notes.get(idNote).getDescription()).putExtra(TAG_ID,idNote).putExtra(TAG_CHECK, notes.get(idNote).isCheck());
-//
-//
-//                startActivityForResult(i,1);
-//
-//
-//
-//            }
-//        });
-
-//        next.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int idTemp = idNote;
-//                if(idTemp++< notes.size()-1)
-//                {
-//                    strizhViewModel.moveToNext();
-//                    //idNote++;
-//                    note_name.setText(notes.get(idNote).getName());
-//                    note_description.setText(notes.get(idNote).getDescription());
-//                }
-//            }
-//        });
-
-//        previous.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int idTemp = idNote;
-//                if(idTemp-- > 0)
-//                {
-//                    strizhViewModel.moveToPrevious();
-//                    //idNote--;
-//                    note_name.setText(notes.get(idNote).getName());
-//                    note_description.setText(notes.get(idNote).getDescription());
-//                }
-//            }
-//        });
-
-
-
-
-
     }
 
-//    private View.OnClickListener editButton = new View.OnClickListener()
-//    {
-//        @Override
-//        public void onClick(View v){
-//            getEdit(idNote);
-//        }
-//
-//    };
 
     public void getEdit(int id) {
         Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
@@ -220,6 +99,16 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
 
         startActivityForResult(i,1);
     }
+
+    public int findIndexOfNoteById(ArrayList<TaskModel> notes, int id) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -230,12 +119,15 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
             boolean delete = data.getBooleanExtra(TAG_DELETE, false);
-            int id = data.getIntExtra(TAG_ID, 1)-1;
+            int tempId = data.getIntExtra(TAG_ID, 1);
+            int id = findIndexOfNoteById(notes, tempId);
+
 
 
             if(delete)
             {
-                //strizhViewModel.delete(notes.get(id));
+                //лаб8 удаление
+                strizhViewModel.delete(notes.get(id));
             }else{
                 String name = data.getStringExtra(TAG_NAME);
                 String description = data.getStringExtra(TAG_DESC);
@@ -245,9 +137,8 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
                 notes.get(id).setName(name);
                 notes.get(id).setDescription(description);
                 notes.get(id).setCheck(check);
-                note_name.setText(name);
-                note_description.setText(description);
 
+                //лаб8 обновление
                 strizhViewModel.update(notes.get(id));
             }
 
@@ -259,17 +150,10 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
 
-            notes.add(new TaskModel(notes.size()+1, name, description, false));
-//            strizhViewModel.showLast();
-//            note_name.setText(notes.get(notes.size()-1).getName());
-//            note_description.setText(notes.get(notes.size()-1).getDescription());
+            notes.add(new TaskModel( name, description, false));
 
-            //лаб8
-//            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-//            strizhViewModel.insertNote(notes.get(notes.size()-1), noteDao);
+            //лаб8 добавление
             strizhViewModel.insert(notes.get(notes.size()-1));
-
-
 
 
         }
@@ -299,14 +183,11 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
     protected void onResume() {
         super.onResume();
         Log.d("Lifecycle", "onResume invoked");
-        //insertData(this);
-
-        note_name.setText(notes.get(0).getName());
-        note_description.setText(notes.get(0).getDescription());
-
         strizhViewModel.getData().observe(this, data -> {
             notes = data;
         });
+
+
 //лаб7 запуск фрагмнта
         if(isTabletDevice())
         {
@@ -325,14 +206,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
             ft.commit();
         }
 
-
-
-
         insertData(this);
-
-
-
-
 
     }
     public void insertData(Context context) {
@@ -340,8 +214,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         boolean hasRun = prefs.getBoolean("hasRun", false);
         if (!hasRun) {
             for (int i = 0; i<notes.size();i++) {
-                //Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-                //strizhViewModel.insertNote(notes.get(i), noteDao);
+
                 strizhViewModel.insert(notes.get(i));
             }
             SharedPreferences.Editor editor = prefs.edit();
@@ -377,21 +250,9 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         return notes;
     }
 
-//    public void startFragment(int id){
-//        Bundle args = new Bundle();
-//        args.putString(TAG_NAME, notes.get(id).getName());
-//        args.putString(TAG_DESC, notes.get(id).getDescription());
-//        args.putBoolean(TAG_CHECK, notes.get(id).isCheck());
-//
-//        BlankFragment_frame_two blankFragment1 = new BlankFragment_frame_two();
-//        blankFragment1.setArguments(args);
-//
-//        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-//        ft2.replace(R.id.frame_two, blankFragment1);
-//        ft2.commit();
-//    }
 
-//лаб7 меню +
+
+    //лаб7 меню +
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

@@ -57,11 +57,6 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
 
         swipeRefreshLayout =  view.findViewById(R.id.swipe_refresh_layout);
 
-//        MainActivity mainActivityRecycler = (MainActivity) getActivity();
-//        if (mainActivityRecycler != null) {
-//            notes = mainActivityRecycler.getNotes();
-//
-//        }
 
         notes = strizhViewModel.getNotesBank();
 
@@ -73,7 +68,7 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
                 if (refreshListener != null) {
                     refreshListener.onRefreshData();
                 }
-                swipeRefreshLayout.setRefreshing(false); // Заканчиваем анимацию обновления
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -93,10 +88,10 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
 
 
 
-    public void onNoteEdit(TaskModel selectedNote) {
+    public void onNoteEdit(TaskModel selectedNote, int position) {
         Intent intent = new Intent(getActivity(), EditNoteActivity.class);
 
-        intent.putExtra(TAG_ID, selectedNote.getId());
+        intent.putExtra(TAG_ID, position);
         intent.putExtra(TAG_NAME, selectedNote.getName());
         intent.putExtra(TAG_DESC, selectedNote.getDescription());
         intent.putExtra(TAG_CHECK, selectedNote.isCheck());

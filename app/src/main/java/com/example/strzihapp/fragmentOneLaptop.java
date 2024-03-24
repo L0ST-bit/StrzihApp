@@ -65,7 +65,7 @@ public class fragmentOneLaptop extends Fragment implements MyItemRecyclerViewAda
 
         return view;
     }
-    public void onNoteEdit(TaskModel selectedNote) {
+    public void onNoteEdit(TaskModel selectedNote, int position) {
         Bundle args = new Bundle();
         args.putString(TAG_NAME, notes.get(selectedNote.getId()).getName());
         args.putString(TAG_DESC, notes.get(selectedNote.getId()).getDescription());

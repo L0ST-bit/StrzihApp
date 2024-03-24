@@ -26,7 +26,7 @@ public class EditNoteActivity extends AppCompatActivity {
     private EditText note_name, note_description;
     private Button save_button, remove_button;
     private CheckBox checkBox_;
-    private int idNote;
+    private int idNoteInArray;
 
     private StrizhViewModel strizhViewModel;
 
@@ -45,13 +45,10 @@ public class EditNoteActivity extends AppCompatActivity {
         checkBox_ = (CheckBox) findViewById(R.id.edit_checkbox);
 
 
-
-        ArrayList<TaskModel> currentNotes = strizhViewModel.getData().getValue();
-
         Intent intent = getIntent();
 
-        // Извлекаем данные из Intent
-        idNote = intent.getIntExtra(TAG_ID, 0);
+
+        idNoteInArray = intent.getIntExtra(TAG_ID, 0)-1;
         String name = intent.getStringExtra(TAG_NAME);
         String description = intent.getStringExtra(TAG_DESC);
         boolean check = intent.getBooleanExtra(TAG_CHECK, false);
@@ -77,7 +74,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 Intent resultIntent = new Intent(EditNoteActivity.this, MainActivity.class);
                 resultIntent.putExtra(TAG_NAME,note_name.getText().toString());
                 resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
-                resultIntent.putExtra(TAG_ID,idNote);
+                resultIntent.putExtra(TAG_ID,idNoteInArray);
                 resultIntent.putExtra(TAG_CHECK,checkBox_.isChecked());
                 setResult(Activity.RESULT_OK, resultIntent);
 
@@ -92,7 +89,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
                 Intent resultIntent = new Intent(EditNoteActivity.this, MainActivity.class);
                 resultIntent.putExtra(TAG_DELETE,true);
-                resultIntent.putExtra(TAG_ID,idNote);
+                resultIntent.putExtra(TAG_ID,idNoteInArray);
                 setResult(Activity.RESULT_OK, resultIntent);
 
                 finish();

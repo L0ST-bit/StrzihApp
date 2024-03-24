@@ -30,11 +30,11 @@ public class MainActivityRecycler extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recycler);
 
-        strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
-        strizhViewModel.getData().observe(this, data -> {
-            notes = data;
-
-        });
+//        strizhViewModel = new ViewModelProvider(this).get(StrizhViewModel.class);
+//        strizhViewModel.getData().observe(this, data -> {
+//            notes = data;
+//
+//        });
 //        strizhViewModel.getDataInt().observe(this, index -> {
 //            idNote = index;
 //        });

@@ -50,8 +50,8 @@ public class TaskModel  {
     }
 
 
-    public TaskModel(int id, String name, String description, boolean check) {
-        this.id = id;
+    public TaskModel(String name, String description, boolean check) {
+
         this.name = name;
         this.description = description;
         this.check = check;
