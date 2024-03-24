@@ -26,9 +26,6 @@ public class NotesRepo {
     LiveData<List<TaskModel>> getAllTasks() {
         return allTasks;
     }
-    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
-        return CompletableFuture.supplyAsync(() -> taskDao.getAllNotes(), executorService);
-    }
 
 
 
@@ -48,17 +45,17 @@ public class NotesRepo {
 
 
 
-    private static class insertAsyncTask extends AsyncTask<TaskModel, Void, Void> {
-        private Dao_DB asyncTaskDao;
-
-        insertAsyncTask(Dao_DB dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final TaskModel... params) {
-            asyncTaskDao.insert(params[0]);
-            return null;
-        }
-    }
+//    private static class insertAsyncTask extends AsyncTask<TaskModel, Void, Void> {
+//        private Dao_DB asyncTaskDao;
+//
+//        insertAsyncTask(Dao_DB dao) {
+//            asyncTaskDao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(final TaskModel... params) {
+//            asyncTaskDao.insert(params[0]);
+//            return null;
+//        }
+//    }
 }

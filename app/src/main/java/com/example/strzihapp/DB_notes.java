@@ -17,7 +17,6 @@ public abstract class DB_notes extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     DB_notes.class, "Notes_database")
-                            .fallbackToDestructiveMigration().createFromAsset("database/myapp.db")
                             .build();
                 }
             }

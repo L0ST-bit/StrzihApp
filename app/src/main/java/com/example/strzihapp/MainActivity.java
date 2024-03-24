@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
 
             if(delete)
             {
-                strizhViewModel.delete(notes.get(id));
+                //strizhViewModel.delete(notes.get(id));
             }else{
                 String name = data.getStringExtra(TAG_NAME);
                 String description = data.getStringExtra(TAG_DESC);

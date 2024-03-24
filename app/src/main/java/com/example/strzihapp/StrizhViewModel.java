@@ -28,9 +28,9 @@ public class StrizhViewModel extends AndroidViewModel {
 
 
 
-    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
-        return repository.getAllTasksAsync();
-    }
+//    public CompletableFuture<List<TaskModel>> getAllTasksAsync() {
+//        return repository.getAllTasksAsync();
+//    }
 
 
 
