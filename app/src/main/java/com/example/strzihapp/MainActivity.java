@@ -203,8 +203,9 @@ public class MainActivity extends AppCompatActivity {
             note_name.setText(name);
             note_description.setText(description);
 
-            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-            strizhViewModel.updateNote(notes.get(id), noteDao);
+//            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+//            strizhViewModel.updateNote(notes.get(id), noteDao);
+            strizhViewModel.update(notes.get(id));
 
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
@@ -218,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
             note_description.setText(notes.get(idNote).getDescription());
 
             //лаб8
-            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-            strizhViewModel.insertNote(notes.get(notes.size()-1), noteDao);
-
+//            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+//            strizhViewModel.insertNote(notes.get(notes.size()-1), noteDao);
+            strizhViewModel.insert(notes.get(notes.size()-1));
 
 
 
@@ -291,8 +292,9 @@ public class MainActivity extends AppCompatActivity {
         boolean hasRun = prefs.getBoolean("hasRun", false);
         if (!hasRun) {
             for (int i = 0; i<notes.size();i++) {
-                Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-                strizhViewModel.insertNote(notes.get(i), noteDao);
+                //Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
+                //strizhViewModel.insertNote(notes.get(i), noteDao);
+                strizhViewModel.insert(notes.get(i));
             }
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("hasRun", true);

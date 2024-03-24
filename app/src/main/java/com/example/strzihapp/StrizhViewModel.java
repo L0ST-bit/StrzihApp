@@ -27,6 +27,11 @@ public class StrizhViewModel extends AndroidViewModel {
     LiveData<List<TaskModel>> getAllTasks() { return allTasks; }
 
     public void insert(TaskModel task) { repository.insert(task); }
+    public void update(TaskModel task) { repository.update(task); }
+    public void delete(TaskModel task)
+    {
+        repository.delete(task);
+    }
 
 
 
@@ -119,6 +124,9 @@ public class StrizhViewModel extends AndroidViewModel {
         new Async(Dao, "update").execute(note);
 
     }
+
+
+
 
 
 }
