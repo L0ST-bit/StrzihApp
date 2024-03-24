@@ -74,7 +74,7 @@ public class StrizhViewModel extends AndroidViewModel {
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
-            add(new TaskModel ( "Заметка про лабы1", "Нужно всё сделать1", false));
+            add(new TaskModel ("Заметка про лабы1", "Нужно всё сделать1", false));
             add(new TaskModel ( "Заметка про лабы2", "Нужно всё сделать2", true));
 
         }

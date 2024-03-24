@@ -48,7 +48,7 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        idNoteInArray = intent.getIntExtra(TAG_ID, 0)-1;
+        idNoteInArray = intent.getIntExtra(TAG_ID, 0);
         String name = intent.getStringExtra(TAG_NAME);
         String description = intent.getStringExtra(TAG_DESC);
         boolean check = intent.getBooleanExtra(TAG_CHECK, false);

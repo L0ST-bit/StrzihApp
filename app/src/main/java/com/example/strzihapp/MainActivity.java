@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity implements ItemFragment_note.OnRefreshListener {
@@ -100,13 +101,14 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         startActivityForResult(i,1);
     }
 
-    public int findIndexOfNoteById(ArrayList<TaskModel> notes, int id) {
+    public int findUnicId(ArrayList<TaskModel> notes, int id) {
+        int UnicId = 0;
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getId() == id) {
-                return i;
+                UnicId = id;
             }
         }
-        return -1;
+        return id;
     }
 
 
@@ -119,15 +121,17 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
             boolean delete = data.getBooleanExtra(TAG_DELETE, false);
-            int tempId = data.getIntExtra(TAG_ID, 1);
-            int id = findIndexOfNoteById(notes, tempId);
+            int id = data.getIntExtra(TAG_ID, 0);
+            //int id = findIndexOfNoteById(notes, tempId);
+            ArrayList<TaskModel> curNotes = strizhViewModel.getNotesBank();
+
 
 
 
             if(delete)
             {
                 //лаб8 удаление
-                strizhViewModel.delete(notes.get(id));
+                strizhViewModel.delete(curNotes.get(id));
             }else{
                 String name = data.getStringExtra(TAG_NAME);
                 String description = data.getStringExtra(TAG_DESC);
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
                 notes.get(id).setCheck(check);
 
                 //лаб8 обновление
-                strizhViewModel.update(notes.get(id));
+                strizhViewModel.update(curNotes.get(id));
             }
 
 
@@ -150,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
             String name = data.getStringExtra(TAG_NAME);
             String description = data.getStringExtra(TAG_DESC);
 
-            notes.add(new TaskModel( name, description, false));
+            notes.add(new TaskModel(name, description, false));
 
             //лаб8 добавление
             strizhViewModel.insert(notes.get(notes.size()-1));
@@ -183,9 +187,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
     protected void onResume() {
         super.onResume();
         Log.d("Lifecycle", "onResume invoked");
-        strizhViewModel.getData().observe(this, data -> {
-            notes = data;
-        });
+
 
 
 //лаб7 запуск фрагмнта
