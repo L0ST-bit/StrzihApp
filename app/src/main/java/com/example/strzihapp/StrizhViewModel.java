@@ -30,7 +30,7 @@ public class StrizhViewModel extends AndroidViewModel {
     public void delete(TaskModel task)
     {
 
-        notesBank.remove(task.getId()-1);
+
         repository.delete(task);
     }
 

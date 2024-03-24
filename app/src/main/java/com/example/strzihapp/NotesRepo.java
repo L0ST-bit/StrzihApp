@@ -41,6 +41,7 @@ public class NotesRepo {
     void delete(TaskModel task) {
         //new insertAsyncTask(taskDao).execute(task);
         executorService.execute(() -> taskDao.delete(task));
+        //executorService.execute(() -> taskDao.deleteN(task, id));
     }
 
 

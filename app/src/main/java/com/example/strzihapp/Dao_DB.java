@@ -26,6 +26,9 @@ public interface Dao_DB {
     @Query("SELECT * FROM NotesTable")
     LiveData<List<TaskModel>> getAllTasks();
 
+//    @Query("DELETE FROM NotesTable WHERE id = :noteId")
+//    void deleteN(TaskModel task, int noteId);
+
 //    @Query("SELECT * FROM NotesTable")
 //    List<TaskModel> getAllNotes();
 //
