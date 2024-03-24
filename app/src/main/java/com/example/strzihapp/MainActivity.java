@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
     private static final String TAG_DESC = "description";
     private static final String TAG_ID = "id_note";
     private static final String TAG_CHECK = "check";
+    private static final String TAG_DELETE = "delete";
 
     private EditText note_name, note_description;
     private Button add_button, edit_button, show_last_button;
@@ -84,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         strizhViewModel.getData().observe(this, data -> {
              notes = data;
         });
-        strizhViewModel.getDataInt().observe(this, index -> {
-            idNote = index;
-        });
-        Log.d(TAG, "Модель получена");
+//        strizhViewModel.getDataInt().observe(this, index -> {
+//            idNote = index;
+//        });
+//        Log.d(TAG, "Модель получена");
 
 
 //        strizhViewModel.getAllTasksAsync().thenAcceptAsync(tasks -> {
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
             ArrayList<TaskModel> temp = new ArrayList<>(taskModels);
 
             strizhViewModel.setNotesBank(temp);
+            //notes = new ArrayList<TaskModel>(taskModels);
             }
         });
 
@@ -131,25 +133,25 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         next = (ImageButton) findViewById(R.id.next);
 
 
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, AddNoteActivity.class);
-                startActivityForResult(i,2);
-            }
-        });
-        show_last_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                idNote = notes.size()-1;
-                note_name.setText(notes.get(idNote).getName());
-                note_description.setText(notes.get(idNote).getDescription());
-                strizhViewModel.showLast();
+//        add_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, AddNoteActivity.class);
+//                startActivityForResult(i,2);
+//            }
+//        });
+//        show_last_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                idNote = notes.size()-1;
+//                note_name.setText(notes.get(idNote).getName());
+//                note_description.setText(notes.get(idNote).getDescription());
+//                strizhViewModel.showLast();
+//
+//            }
+//        });
 
-            }
-        });
-
-        edit_button.setOnClickListener(editButton);
+//        edit_button.setOnClickListener(editButton);
 
 //        edit_button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -167,34 +169,34 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
 //            }
 //        });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        next.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                int idTemp = idNote;
+//                if(idTemp++< notes.size()-1)
+//                {
+//                    strizhViewModel.moveToNext();
+//                    //idNote++;
+//                    note_name.setText(notes.get(idNote).getName());
+//                    note_description.setText(notes.get(idNote).getDescription());
+//                }
+//            }
+//        });
 
-                int idTemp = idNote;
-                if(idTemp++< notes.size()-1)
-                {
-                    strizhViewModel.moveToNext();
-                    //idNote++;
-                    note_name.setText(notes.get(idNote).getName());
-                    note_description.setText(notes.get(idNote).getDescription());
-                }
-            }
-        });
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int idTemp = idNote;
-                if(idTemp-- > 0)
-                {
-                    strizhViewModel.moveToPrevious();
-                    //idNote--;
-                    note_name.setText(notes.get(idNote).getName());
-                    note_description.setText(notes.get(idNote).getDescription());
-                }
-            }
-        });
+//        previous.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int idTemp = idNote;
+//                if(idTemp-- > 0)
+//                {
+//                    strizhViewModel.moveToPrevious();
+//                    //idNote--;
+//                    note_name.setText(notes.get(idNote).getName());
+//                    note_description.setText(notes.get(idNote).getDescription());
+//                }
+//            }
+//        });
 
 
 
@@ -202,14 +204,14 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
 
     }
 
-    private View.OnClickListener editButton = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v){
-            getEdit(idNote);
-        }
-
-    };
+//    private View.OnClickListener editButton = new View.OnClickListener()
+//    {
+//        @Override
+//        public void onClick(View v){
+//            getEdit(idNote);
+//        }
+//
+//    };
 
     public void getEdit(int id) {
         Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
@@ -227,21 +229,29 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
         //edit
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
-
-            String name = data.getStringExtra(TAG_NAME);
-            String description = data.getStringExtra(TAG_DESC);
+            boolean delete = data.getBooleanExtra(TAG_DELETE, false);
             int id = data.getIntExtra(TAG_ID, 1)-1;
-            boolean check = data.getBooleanExtra(TAG_CHECK, false);
 
-            notes.get(id).setName(name);
-            notes.get(id).setDescription(description);
-            notes.get(id).setCheck(check);
-            note_name.setText(name);
-            note_description.setText(description);
 
-//            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();
-//            strizhViewModel.updateNote(notes.get(id), noteDao);
-            strizhViewModel.update(notes.get(id));
+            if(delete)
+            {
+                strizhViewModel.delete(notes.get(id));
+            }else{
+                String name = data.getStringExtra(TAG_NAME);
+                String description = data.getStringExtra(TAG_DESC);
+
+                boolean check = data.getBooleanExtra(TAG_CHECK, false);
+
+                notes.get(id).setName(name);
+                notes.get(id).setDescription(description);
+                notes.get(id).setCheck(check);
+                note_name.setText(name);
+                note_description.setText(description);
+
+                strizhViewModel.update(notes.get(id));
+            }
+
+
 
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
@@ -250,9 +260,9 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
             String description = data.getStringExtra(TAG_DESC);
 
             notes.add(new TaskModel(notes.size()+1, name, description, false));
-            strizhViewModel.showLast();
-            note_name.setText(notes.get(idNote).getName());
-            note_description.setText(notes.get(idNote).getDescription());
+//            strizhViewModel.showLast();
+//            note_name.setText(notes.get(notes.size()-1).getName());
+//            note_description.setText(notes.get(notes.size()-1).getDescription());
 
             //лаб8
 //            Dao_DB noteDao = DB_notes.getDatabase(this).notesDao();

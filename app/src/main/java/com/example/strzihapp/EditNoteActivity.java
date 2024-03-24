@@ -21,9 +21,10 @@ public class EditNoteActivity extends AppCompatActivity {
     private static final String TAG_DESC = "description";
     private static final String TAG_ID = "id_note";
     private static final String TAG_CHECK = "check";
+    private static final String TAG_DELETE = "delete";
 
     private EditText note_name, note_description;
-    private Button save_button;
+    private Button save_button, remove_button;
     private CheckBox checkBox_;
     private int idNote;
 
@@ -39,6 +40,7 @@ public class EditNoteActivity extends AppCompatActivity {
         note_name = findViewById(R.id.edit_note_name_edit);
         note_description = findViewById(R.id.edit_note_description_edit);
         save_button = findViewById(R.id.edit_save_button);
+        remove_button = findViewById(R.id.buttonRemove);
 
         checkBox_ = (CheckBox) findViewById(R.id.edit_checkbox);
 
@@ -77,6 +79,20 @@ public class EditNoteActivity extends AppCompatActivity {
                 resultIntent.putExtra(TAG_DESC,note_description.getText().toString());
                 resultIntent.putExtra(TAG_ID,idNote);
                 resultIntent.putExtra(TAG_CHECK,checkBox_.isChecked());
+                setResult(Activity.RESULT_OK, resultIntent);
+
+                finish();
+            }
+        });
+        remove_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+
+            {
+
+                Intent resultIntent = new Intent(EditNoteActivity.this, MainActivity.class);
+                resultIntent.putExtra(TAG_DELETE,true);
+                resultIntent.putExtra(TAG_ID,idNote);
                 setResult(Activity.RESULT_OK, resultIntent);
 
                 finish();

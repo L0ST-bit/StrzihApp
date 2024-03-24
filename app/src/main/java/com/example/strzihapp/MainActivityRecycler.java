@@ -35,10 +35,10 @@ public class MainActivityRecycler extends AppCompatActivity {
             notes = data;
 
         });
-        strizhViewModel.getDataInt().observe(this, index -> {
-            idNote = index;
-        });
-        Log.d(TAG, "Модель получена");
+//        strizhViewModel.getDataInt().observe(this, index -> {
+//            idNote = index;
+//        });
+//        Log.d(TAG, "Модель получена");
 
 
 //        FrameLayout frameLayout = findViewById(R.id.frame_one);

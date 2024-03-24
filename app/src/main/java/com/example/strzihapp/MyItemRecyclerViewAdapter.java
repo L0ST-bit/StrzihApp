@@ -62,6 +62,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return new ViewHolder(view);
     }
 
+    public void setTasks(List<TaskModel> newTasks) {
+        this.notes = new ArrayList<>(newTasks); // Создаем новый список, чтобы избежать проблем с мутабельностью
+        notifyDataSetChanged(); // Уведомляем адаптер о том, что данные изменились
+    }
 
 
     @Override

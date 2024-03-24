@@ -59,22 +59,22 @@ public class StrizhViewModel extends AndroidViewModel {
         }
         return data;
     }
-    public MutableLiveData<Integer> getDataInt() {
-        if (index == null) {
-            index = new MutableLiveData<Integer>();
-            loadDataInt();
-        }
-        return index;
-    }
+//    public MutableLiveData<Integer> getDataInt() {
+//        if (index == null) {
+//            index = new MutableLiveData<Integer>();
+//            loadDataInt();
+//        }
+//        return index;
+//    }
 
     private void loadData() {
         data.setValue(notesBank);
 
     }
-    private void loadDataInt() {
-        index.setValue(CurIndex);
-
-    }
+//    private void loadDataInt() {
+//        index.setValue(CurIndex);
+//
+//    }
 
 
 
@@ -89,6 +89,10 @@ public class StrizhViewModel extends AndroidViewModel {
         this.notesBank = notesBank;
     }
 
+    public ArrayList<TaskModel> getNotesBank() {
+        return notesBank;
+    }
+
     private ArrayList<TaskModel> notesBank = new ArrayList<TaskModel>()
     {
         {
@@ -99,31 +103,31 @@ public class StrizhViewModel extends AndroidViewModel {
 
     };
 
-    public void showLast()
-    {
-        CurIndex = notesBank.size()-1;
-        loadDataInt();
-    }
-    public void moveToNext()
-    {
-        int idTemp = CurIndex;
-        if(idTemp++< notesBank.size()-1)
-        {
-            CurIndex++;
-            loadDataInt();}
-
-        }
-
-    public void moveToPrevious()
-    {
-        int idTemp = CurIndex;
-        if(idTemp-- > 0)
-        {
-            CurIndex--;
-            loadDataInt();
-        }
-
-    }
+//    public void showLast()
+//    {
+//        CurIndex = notesBank.size()-1;
+//        //loadDataInt();
+//    }
+//    public void moveToNext()
+//    {
+//        int idTemp = CurIndex;
+//        if(idTemp++< notesBank.size()-1)
+//        {
+//            CurIndex++;
+//            //loadDataInt();}
+//
+//        }
+//
+//    public void moveToPrevious()
+//    {
+//        int idTemp = CurIndex;
+//        if(idTemp-- > 0)
+//        {
+//            CurIndex--;
+//            //loadDataInt();
+//        }
+//
+//    }
 
 
 //    protected void insertNote(TaskModel note, Dao_DB Dao)

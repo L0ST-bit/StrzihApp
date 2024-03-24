@@ -34,6 +34,7 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private OnRefreshListener refreshListener;
+    StrizhViewModel strizhViewModel;
 
     public interface OnRefreshListener {
         void onRefreshData();
@@ -45,6 +46,8 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        strizhViewModel = new ViewModelProvider(requireActivity()).get(StrizhViewModel.class);
+
     }
 
     @Override
@@ -53,11 +56,14 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
         View view = inflater.inflate(R.layout.fragment_item_note_list, container, false);
 
         swipeRefreshLayout =  view.findViewById(R.id.swipe_refresh_layout);
-        MainActivity mainActivityRecycler = (MainActivity) getActivity();
-        if (mainActivityRecycler != null) {
-            notes = mainActivityRecycler.getNotes();
 
-        }
+//        MainActivity mainActivityRecycler = (MainActivity) getActivity();
+//        if (mainActivityRecycler != null) {
+//            notes = mainActivityRecycler.getNotes();
+//
+//        }
+
+        notes = strizhViewModel.getNotesBank();
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -71,18 +77,15 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
             }
         });
 
-
-
-
-        //Log.d("sssssssssssssssssssssssssssssssssssssssssssssssssssssss", notes.get(1).getName());
-        //mainActivityRecycler = (MainActivity) getActivity();
-        //String name = notes.get(0).getName();
         recyclerView = view.findViewById(R.id.list);
         MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, getContext(),this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        strizhViewModel.getAllTasks().observe(getViewLifecycleOwner(), tasks -> {
+            adapter.setTasks(tasks);
+        });
 
 
         return view;
