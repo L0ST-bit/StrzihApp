@@ -32,13 +32,10 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
     ArrayList<TaskModel> notes;
     private RecyclerView recyclerView;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private OnRefreshListener refreshListener;
+
     StrizhViewModel strizhViewModel;
 
-    public interface OnRefreshListener {
-        void onRefreshData();
-    }
+
 
 
 
@@ -55,22 +52,13 @@ public class ItemFragment_note extends Fragment implements MyItemRecyclerViewAda
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_note_list, container, false);
 
-        swipeRefreshLayout =  view.findViewById(R.id.swipe_refresh_layout);
+
 
 
         notes = strizhViewModel.getNotesBank();
 
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
 
-                if (refreshListener != null) {
-                    refreshListener.onRefreshData();
-                }
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
 
         recyclerView = view.findViewById(R.id.list);
         MyItemRecyclerViewAdapter adapter = new MyItemRecyclerViewAdapter(notes, getContext(),this);

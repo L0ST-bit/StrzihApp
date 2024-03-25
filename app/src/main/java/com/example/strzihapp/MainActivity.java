@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class MainActivity extends AppCompatActivity implements ItemFragment_note.OnRefreshListener {
+public class MainActivity extends AppCompatActivity{
 
 
 
@@ -273,9 +273,6 @@ public class MainActivity extends AppCompatActivity implements ItemFragment_note
     }
 
 
-    @Override
-    public void onRefreshData() {
 
-    }
 
 }
